@@ -39,7 +39,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.namozvaqtlari.R
+import com.example.namozvaqtlari.Screen
 import com.example.namozvaqtlari.common.SharedPref
 import com.example.namozvaqtlari.common.Util
 import com.example.namozvaqtlari.presentation.home.component.CustomDialog
@@ -53,7 +57,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(
     state: PrayingState,
-    event: (PrayingEvent) -> Unit
+    event: (PrayingEvent) -> Unit,
+    navController: NavHostController
 ) {
 
 
@@ -82,7 +87,6 @@ fun HomeScreen(
             println("SSS remainingTime=$remainingTime")
         }
     }
-
 
     var showRegionBottomSheet by remember {
         mutableStateOf(false)
@@ -127,6 +131,7 @@ fun HomeScreen(
             CircularProgressIndicator()
         }
     }
+
 
     Column(
         modifier = Modifier
@@ -191,7 +196,9 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = {},
+                onClick = {
+                    navController.navigate(Screen.PrayerTimesMonthly)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White
                 )
@@ -214,7 +221,7 @@ fun HomeScreen(
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Text(
-                    text = state.prayingData?.timings?.Fajr?: "",
+                    text = state.prayingData?.timings?.Fajr ?: "",
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
@@ -297,6 +304,7 @@ fun HomeScreen(
 private fun Preview() {
     HomeScreen(
         state = PrayingState(),
-        event = {}
+        event = {},
+        rememberNavController()
     )
 }
