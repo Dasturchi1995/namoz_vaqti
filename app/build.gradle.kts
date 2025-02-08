@@ -77,4 +77,19 @@ dependencies {
     //navigation
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
+
+    //RetrofitApi
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Okhttp
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    // core
+    implementation("com.chibatching.kotpref:kotpref:2.13.1")
+
+
+    // optional, support saving enum value and ordinal
+    implementation ("com.chibatching.kotpref:enum-support:2.13.1")
 }
