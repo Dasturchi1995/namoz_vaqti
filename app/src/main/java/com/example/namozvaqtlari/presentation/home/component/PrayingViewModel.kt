@@ -37,6 +37,10 @@ class PrayingViewModel @Inject constructor(
                 requestDailyPraying()
                 requestTomorrowPraying()
             }
+
+            PrayingEvent.RequestMonthlyPraying -> {
+                requestMonthlyPraying()
+            }
         }
     }
 
@@ -97,6 +101,7 @@ class PrayingViewModel @Inject constructor(
             }
         }
     }
+
     private fun requestTomorrowPraying(){
 
         if (state.value.region == null){
@@ -116,6 +121,9 @@ class PrayingViewModel @Inject constructor(
                 date = Util.getTomorrowDate(),
                 queryMap = queryMap
             )
+
+            println("requestTomorrowPraying = date=${Util.getTomorrowDate()}")
+
             when(result){
                 is ResponseResult.Loading -> {
                 }
@@ -127,6 +135,61 @@ class PrayingViewModel @Inject constructor(
                     }
                 }
                 is ResponseResult.Error -> {
+                }
+            }
+        }
+    }
+
+    private fun requestMonthlyPraying() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    loading = true
+                )
+            }
+
+
+            val queryMap = HashMap<String, Any>()
+            queryMap["city"] = state.value.region?.nameEn ?: ""
+            queryMap["country"] = "UZ"
+            queryMap["x7xapikey"] = "b19e9cfeffee0cc418481f6ec739b4c5"
+            queryMap["method"] = 3
+            queryMap["school"] = 1
+            queryMap["year"] = Util.getThisYear()
+            queryMap["month"] = Util.getThisMonth()
+
+
+            val result = repository.requestMonthly(
+                queryMap = queryMap
+            )
+            when (result) {
+                is ResponseResult.Loading -> {
+                    _state.update {
+                        it.copy(
+                            loading = true,
+                            errorMessage = "",
+                        )
+                    }
+                }
+
+                is ResponseResult.Success -> {
+                    _state.update {
+                        it.copy(
+                            loading = false,
+                            errorMessage = "",
+                            prayingDataList = result.data?.data ?: emptyList()
+                        )
+                    }
+                }
+
+                is ResponseResult.Error -> {
+                    _state.update {
+                        it.copy(
+                            loading = false,
+                            errorMessage = result.message ?: "Something went wrong!",
+                            prayingDataList = emptyList()
+                        )
+                    }
                 }
             }
         }

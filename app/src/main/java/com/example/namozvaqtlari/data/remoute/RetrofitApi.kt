@@ -16,9 +16,8 @@ interface RetrofitApi {
         @QueryMap queryMap:HashMap<String, Any>,
     ): Response<DailyResponse>
 
-    @GET("/v1/calendarByCity/year")
+    @GET("/v1/calendarByCity")
     suspend fun requestMonthly(
-        @Path("monthly") monthly: String = Util.getTodayDate(),
         @QueryMap queryMap: HashMap<String, Any>
     ): Response<MonthlyResponse>
 }

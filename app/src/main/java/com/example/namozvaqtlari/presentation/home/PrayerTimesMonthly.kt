@@ -3,6 +3,7 @@ package com.example.namozvaqtlari.presentation.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,27 +12,38 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.namozvaqtlari.common.Util
 import com.example.namozvaqtlari.presentation.home.component.PrayingEvent
 import com.example.namozvaqtlari.presentation.home.component.PrayingState
+import com.example.namozvaqtlari.presentation.home.component.PrayingTimeItem
+import com.example.namozvaqtlari.ui.itemHeight
+import com.example.namozvaqtlari.ui.itemTextSize
 
 @Composable
 fun PrayerTimesMonthly(
@@ -39,11 +51,22 @@ fun PrayerTimesMonthly(
     state: PrayingState,
     event: (PrayingEvent) -> Unit
 ) {
+
+    LaunchedEffect(true) {
+        event(PrayingEvent.RequestMonthlyPraying)
+    }
+    if (state.loading) {
+        Dialog(
+            onDismissRequest = {}
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState())
     ) {
         Row(
             modifier = Modifier
@@ -69,1218 +92,138 @@ fun PrayerTimesMonthly(
                 fontWeight = FontWeight.Bold
             )
         }
-        Column(
-            verticalArrangement = Arrangement.SpaceAround,
+
+
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 15.dp),
+            horizontalArrangement = Arrangement.Center
         ) {
-            Spacer(Modifier.size(20.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "Кун",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
+            Text(
+                text = "${Util.getMonthName()} / ${Util.getThisYear()}",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
 
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    fontWeight = FontWeight.Bold,
+                    text = "Kun",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "01",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    text = "Bomdod",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
+                )
             }
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
                 Text(
-                    text = "02",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    text = "Quyosh",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
                 Text(
-                    text = "03",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    text = "Peshin",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
                 Text(
-                    text = "04",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    text = "Asr",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
                 Text(
-                    text = "05",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    text = "Shom",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
-            Row(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
+                    .weight(1f)
+                    .height(itemHeight),
+                contentAlignment = Alignment.Center
+            ){
                 Text(
-                    text = "06",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    text = "Hufton",
+                    fontSize = itemTextSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "07",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "08",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "09",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "10",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "11",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "12",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "13",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "14",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
+        }
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "15",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+        LazyColumn {
+            itemsIndexed(state.prayingDataList){ index, data->
+                PrayingTimeItem(
+                    prayingData = data,
+                    day = index+1
                 )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "16",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "17",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "18",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "19",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "20",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "21",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "22",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "23",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "24",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "25",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "26",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "27",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "28",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "29",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    text = "30",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Бомдод",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Пешин",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Аср",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Шом",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Ҳуфтон",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black
-                )
-
             }
         }
     }

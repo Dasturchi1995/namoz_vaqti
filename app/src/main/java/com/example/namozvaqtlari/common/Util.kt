@@ -7,8 +7,12 @@ import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.Month
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Date
+import java.util.Locale
 
 object Util {
 
@@ -17,10 +21,19 @@ object Util {
         return reformatDate(todayDateInMillis)
     }
     fun getTomorrowDate():String{
-        val tomorrowDate = LocalDate.now().plusDays(1).toEpochDay()
+        val tomorrowDate = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         return reformatDate(tomorrowDate)
     }
 
+    fun getThisYear():String{
+        return LocalDate.now().year.toString()
+    }
+    fun getThisMonth():String{
+        return LocalDate.now().monthValue.toString()
+    }
+    fun getMonthName(): String {
+        return Month.of(getThisMonth().toInt()).getDisplayName(TextStyle.FULL, Locale("UZ")).uppercase()
+    }
     fun reformatDate(dateTimeInMillis:Long):String{
         val formatter = SimpleDateFormat("dd-MM-yyyy")
         val date = Date(dateTimeInMillis)
@@ -83,12 +96,17 @@ object Util {
         }
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         val now = LocalTime.now()
-        val prayerTime = LocalTime.parse(nextPrayerTime, formatter)
+        var prayerTime = LocalTime.parse(nextPrayerTime, formatter)
 
         val duration = if (prayerTime.isAfter(now)) {
             Duration.between(now, prayerTime)
         } else {
-            Duration.between(now, prayerTime.plusHours(24)) // Ertangi namoz uchun
+            println("Tomorrowww now = $now   nextPrayer = $prayerTime")
+            prayerTime = prayerTime.plusHours(12)
+            println("Tomorrowww Afrer now = $now   nextPrayer = $prayerTime")
+            //now=21:38
+            //next=05:43
+            Duration.between(now, prayerTime) // Ertangi namoz uchun
         }
 
         val hours = duration.toHours()

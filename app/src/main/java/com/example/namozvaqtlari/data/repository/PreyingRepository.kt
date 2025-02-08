@@ -36,10 +36,9 @@ class PreyingRepository @Inject constructor(
             ResponseResult.Error(message = "Server connection error")
         }
     }
-    suspend fun requestMonthly(monthly:String, queryMap:HashMap<String, Any>): ResponseResult<MonthlyResponse>{
+    suspend fun requestMonthly(queryMap:HashMap<String, Any>): ResponseResult<MonthlyResponse>{
         return try {
             val response = api.requestMonthly(
-                monthly = monthly,
                 queryMap = queryMap
             )
             if (response.isSuccessful && response.code() == 200){
