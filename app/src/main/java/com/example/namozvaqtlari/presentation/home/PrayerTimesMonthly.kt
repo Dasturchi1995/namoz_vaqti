@@ -30,12 +30,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.namozvaqtlari.presentation.home.component.PrayingEvent
 import com.example.namozvaqtlari.presentation.home.component.PrayingState
 
 @Composable
 fun PrayerTimesMonthly(
     navController: NavHostController,
     state: PrayingState,
+    event: (PrayingEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -1289,6 +1291,7 @@ fun PrayerTimesMonthly(
 private fun Preview() {
     PrayerTimesMonthly(
         rememberNavController(),
-        PrayingState()
+        PrayingState(),
+        {}
     )
 }

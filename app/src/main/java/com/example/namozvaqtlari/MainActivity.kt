@@ -42,7 +42,8 @@ class MainActivity : ComponentActivity() {
                     composable<Screen.PrayerTimesMonthly> {
                         PrayerTimesMonthly(
                             navController = navHostController,
-                            state = state
+                            state = state,
+                            event = event
                         )
                     }
                 }
