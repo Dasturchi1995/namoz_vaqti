@@ -65,6 +65,7 @@ class PrayingViewModel @Inject constructor(
             queryMap["x7xapikey"] = "b19e9cfeffee0cc418481f6ec739b4c5"
             queryMap["method"] = 3
             queryMap["school"] = 1
+            queryMap["timezonestring"] = "Asia/Tashkent"
 
 
 
@@ -118,6 +119,7 @@ class PrayingViewModel @Inject constructor(
             queryMap["x7xapikey"] = "b19e9cfeffee0cc418481f6ec739b4c5"
             queryMap["method"] = 3
             queryMap["school"] = 1
+            queryMap["timezonestring"] = "Asia/Tashkent"
 
             val result = repository.requestDaily(
                 date = Util.getTomorrowDate(),
@@ -157,6 +159,7 @@ class PrayingViewModel @Inject constructor(
             queryMap["school"] = 1
             queryMap["year"] = Util.getThisYear()
             queryMap["month"] = Util.getThisMonth()
+            queryMap["timezonestring"] = "Asia/Tashkent"
 
 
             val result = repository.requestMonthly(
