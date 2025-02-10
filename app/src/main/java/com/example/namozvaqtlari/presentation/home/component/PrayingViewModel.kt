@@ -149,11 +149,9 @@ class PrayingViewModel @Inject constructor(
                     loading = true
                 )
             }
-
-
             val queryMap = HashMap<String, Any>()
-            queryMap["city"] = state.value.region?.nameEn ?: ""
-            queryMap["country"] = "UZ"
+            queryMap["latitude"] = state.value.region?.lat ?: ""
+            queryMap["longitude"] = state.value.region?.long ?: ""
             queryMap["x7xapikey"] = "b19e9cfeffee0cc418481f6ec739b4c5"
             queryMap["method"] = 3
             queryMap["school"] = 1
