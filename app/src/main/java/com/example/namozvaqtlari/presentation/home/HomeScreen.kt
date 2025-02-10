@@ -81,6 +81,7 @@ fun HomeScreen(
         while (true) {
             nextPrayingTime = Util.findNextPrayerTime(state)
             remainingTime = Util.calculateRemainingTime(nextPrayingTime.second)
+
             delay(1000)
 
             println("SSS nextPrayingTime=$nextPrayingTime")

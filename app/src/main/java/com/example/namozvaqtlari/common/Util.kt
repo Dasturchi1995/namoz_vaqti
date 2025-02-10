@@ -6,6 +6,7 @@ import com.example.namozvaqtlari.presentation.home.component.PrayingState
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.Month
 import java.time.ZoneId
@@ -41,21 +42,23 @@ object Util {
     }
 
     fun getUzbekistanRegions(): List<Region> {
-        return listOf(
-            Region("Андижон", "Andijan"),
-            Region("Бухоро", "Bukhara"),
-            Region("Фарғона", "Fergana"),
-            Region("Жиззах", "Jizzakh"),
-            Region("Хоразм", "Khorezm"),
-            Region("Наманган", "Namangan"),
-            Region("Навоий", "Navoiy"),
-            Region("Қашқадарё", "Kashkadarya"),
-            Region("Қорақалпоғистон", "Karakalpakstan"),
-            Region("Самарқанд", "Samarkand"),
-            Region("Сирдарё", "Syrdarya"),
-            Region("Сурхондарё", "Surkhandarya"),
-            Region("Тошкент", "Tashkent")
+        val regions = listOf(
+            Region("Тошкент", "Tashkent", 41.2995, 69.2401),
+            Region("Самарқанд", "Samarkand region", 39.6542, 66.9759),
+            Region("Бухоро", "Bukhara region", 39.7747, 64.4286),
+            Region("Хоразм", "Khorezm region", 41.5500, 60.6333),
+            Region("Андижон", "Andijan region", 40.7833, 72.3333),
+            Region("Фарғона", "Fergana region", 40.3864, 71.7864),
+            Region("Наманган", "Namangan region", 40.9983, 71.6726),
+            Region("Навоий", "Navoi region", 40.0844, 65.3792),
+            Region("Қашқадарё", "Kashkadarya region", 38.8606, 65.7891),
+            Region("Сурхондарё", "Surkhandarya region", 37.9400, 67.5700),
+            Region("Жиззах", "Jizzakh region", 40.1158, 67.8422),
+            Region("Сирдарё", "Sirdarya region", 40.5014, 68.7550),
+            Region("Қорақалпоғистон", "Karakalpakstan", 43.7000, 59.0000),
+            Region("Тошкент вилояти", "Tashkent Region", 41.0167, 69.0000)
         )
+        return regions
     }
 
     fun findNextPrayerTime(state: PrayingState): Pair<String, String> {
@@ -95,20 +98,17 @@ object Util {
             return ""
         }
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        val now = LocalTime.now()
-        var prayerTime = LocalTime.parse(nextPrayerTime, formatter)
+        val now = LocalDateTime.now()
+        var todayPrayerTime = LocalTime.parse(nextPrayerTime, formatter)
 
-        val duration = if (prayerTime.isAfter(now)) {
-            Duration.between(now, prayerTime)
-        } else {
-            println("Tomorrowww now = $now   nextPrayer = $prayerTime")
-            prayerTime = prayerTime.plusHours(12)
-            println("Tomorrowww Afrer now = $now   nextPrayer = $prayerTime")
-            //now=21:38
-            //next=05:43
-            Duration.between(now, prayerTime) // Ertangi namoz uchun
+        //converting todayPrayerTime to prayerDateTime
+        var prayerDateTime = LocalDateTime.of(now.toLocalDate(), todayPrayerTime)
+
+        if (prayerDateTime.isBefore(now)) {
+            prayerDateTime = prayerDateTime.plusDays(1)
         }
 
+        val duration = Duration.between(now, prayerDateTime)
         val hours = duration.toHours()
         val minutes = duration.toMinutes() % 60
         val seconds = duration.seconds % 60

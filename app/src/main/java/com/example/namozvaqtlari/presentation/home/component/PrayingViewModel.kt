@@ -8,6 +8,7 @@ import com.example.namozvaqtlari.common.Util
 import com.example.namozvaqtlari.data.remoute.ResponseResult
 import com.example.namozvaqtlari.data.repository.PreyingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -109,6 +110,7 @@ class PrayingViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            delay(2000)
 
             val queryMap = HashMap<String, Any>()
             queryMap["city"] = state.value.region?.nameEn?:""
