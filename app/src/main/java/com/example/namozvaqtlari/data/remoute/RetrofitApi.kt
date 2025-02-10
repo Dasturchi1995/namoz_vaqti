@@ -10,7 +10,7 @@ import retrofit2.http.QueryMap
 
 interface RetrofitApi {
 
-    @GET("/v1/timingsByCity/date={date}")
+    @GET("/v1/timings/date={date}")
     suspend fun requestDaily(
         @Path("date") date: String = Util.getTodayDate(),
         @QueryMap queryMap:HashMap<String, Any>,

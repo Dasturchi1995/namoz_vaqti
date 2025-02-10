@@ -49,12 +49,13 @@ object Util {
             Region("Хоразм", "Khorezm region", 41.5500, 60.6333),
             Region("Андижон", "Andijan region", 40.7833, 72.3333),
             Region("Фарғона", "Fergana region", 40.3864, 71.7864),
+            Region("Қўқон шаҳри", "Kokand", 40.533223416103745, 70.93112400614909),
             Region("Наманган", "Namangan region", 40.9983, 71.6726),
             Region("Навоий", "Navoi region", 40.0844, 65.3792),
             Region("Қашқадарё", "Kashkadarya region", 38.8606, 65.7891),
             Region("Сурхондарё", "Surkhandarya region", 37.9400, 67.5700),
             Region("Жиззах", "Jizzakh region", 40.1158, 67.8422),
-            Region("Сирдарё", "Sirdarya region", 40.5014, 68.7550),
+            Region("Сирдарё", "Sirdarya", 40.5014, 68.7550),
             Region("Қорақалпоғистон", "Karakalpakstan", 43.7000, 59.0000),
             Region("Тошкент вилояти", "Tashkent Region", 41.0167, 69.0000)
         )
