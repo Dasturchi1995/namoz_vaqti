@@ -12,6 +12,7 @@ import java.time.Month
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -39,6 +40,25 @@ object Util {
         val formatter = SimpleDateFormat("dd-MM-yyyy")
         val date = Date(dateTimeInMillis)
         return formatter.format(date)
+    }
+
+    fun getCurrentDateInKrill(): String {
+        val monthsKrill = listOf(
+            "Январ", "Феврал", "Март", "Апрел", "Май", "Июнь",
+            "Июль", "Август", "Сентябр", "Октябр", "Ноябр", "Декабр"
+        )
+
+        val weekdaysKrill = listOf(
+            "Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"
+        )
+
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val monthIndex = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val weekDayIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1 // Calendar.DAY_OF_WEEK starts from 1 (Sunday)
+
+        return "${weekdaysKrill[weekDayIndex]}, $day-${monthsKrill[monthIndex]}-$year"
     }
 
     fun getUzbekistanRegions(): List<Region> {

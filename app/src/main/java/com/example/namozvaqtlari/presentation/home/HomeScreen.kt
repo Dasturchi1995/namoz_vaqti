@@ -205,7 +205,7 @@ fun HomeScreen(
                 )
             ) {
                 Text(
-                    "Душанба 28 Январ",
+                    Util.getCurrentDateInKrill(),
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 25.sp,
                     color = Color.Black,
