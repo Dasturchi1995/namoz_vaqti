@@ -28,16 +28,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.namozvaqtlari.R
 import com.example.namozvaqtlari.common.Util
 import com.example.namozvaqtlari.presentation.home.component.PrayingEvent
 import com.example.namozvaqtlari.presentation.home.component.PrayingState
@@ -62,6 +67,7 @@ fun PrayerTimesMonthly(
             CircularProgressIndicator()
         }
     }
+    val image = ImageBitmap.imageResource(id = R.drawable.fon_green)
 
     Column(
         modifier = Modifier
@@ -72,7 +78,12 @@ fun PrayerTimesMonthly(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
-                .background(MaterialTheme.colorScheme.primary),
+                .drawBehind {
+                    drawImage(
+                        image,
+                        dstSize = IntSize(size.width.toInt(), size.height.toInt())
+                    )
+                },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(
@@ -87,7 +98,7 @@ fun PrayerTimesMonthly(
                 )
             }
             Text(
-                text = "Namoz vaqtlari",
+                text = "Намоз вақтлари",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -123,7 +134,7 @@ fun PrayerTimesMonthly(
             ){
                 Text(
                     fontWeight = FontWeight.Bold,
-                    text = "Kun",
+                    text = "День",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center,
@@ -138,7 +149,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Bomdod",
+                    text = "Бомдод",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center
@@ -151,7 +162,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Quyosh",
+                    text = "Қуёш",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center
@@ -164,7 +175,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Peshin",
+                    text = "Пешин",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center
@@ -177,7 +188,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Asr",
+                    text = "Аср",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center
@@ -190,7 +201,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Shom",
+                    text = "Шом",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center
@@ -203,7 +214,7 @@ fun PrayerTimesMonthly(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = "Hufton",
+                    text = "Xуфтон",
                     fontSize = itemTextSize,
                     color = Color.Black,
                     textAlign = TextAlign.Center

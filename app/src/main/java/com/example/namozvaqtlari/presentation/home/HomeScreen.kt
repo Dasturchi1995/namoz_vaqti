@@ -32,10 +32,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -133,11 +139,17 @@ fun HomeScreen(
         }
     }
 
+    val image = ImageBitmap.imageResource(id = R.drawable.fon_green)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(PrimerColor),
+            .drawBehind {
+                drawImage(
+                    image,
+                    dstSize = IntSize(size.width.toInt(), size.height.toInt())
+                )
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(

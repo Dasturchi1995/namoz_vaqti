@@ -138,13 +138,6 @@ fun PrayingTimeItem(
                 textAlign = TextAlign.Center
             )
         }
-
-
-
-
-
-
-
     }
 }
 
