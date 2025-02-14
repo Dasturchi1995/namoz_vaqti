@@ -1,8 +1,10 @@
 package com.example.namozvaqtlari.presentation.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,6 +38,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -141,172 +144,177 @@ fun HomeScreen(
 
     val image = ImageBitmap.imageResource(id = R.drawable.fon_green)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .drawBehind {
-                drawImage(
-                    image,
-                    dstSize = IntSize(size.width.toInt(), size.height.toInt())
-                )
-            },
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
+        Image(
+            painter = painterResource(R.drawable.fon_green),
+            contentDescription = "Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize()
+        )
         Column(
             modifier = Modifier
-                .padding(20.dp)
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = nextPrayingTime.first,
-                fontSize = Title,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Spacer(Modifier.size(20.dp))
-            Text(
-                text = nextPrayingTime.second,
-                fontSize = TitleBig,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Spacer(Modifier.size(10.dp))
-            Text(
-                remainingTime,
-                fontSize = Title,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-        }
-        TextButton(
-            onClick = {
-                showRegionBottomSheet = true
-            },
-            modifier = Modifier
-                .align(Alignment.Start)
-        ) {
-            Icon(
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = "",
-                tint = Color.White,
-                modifier = Modifier.size(25.dp)
-            )
-            Spacer(Modifier.size(10.dp))
-            Text(
-                text = state.region?.nameUz ?: stringResource(R.string.xудудни_танланг),
-                fontSize = 20.sp,
-                color = Color.White
-            )
-        }
-        Spacer(Modifier.size(5.dp))
-        Column(
-            modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
                 .fillMaxSize()
-                .weight(1.7f)
-                .background(Color.White)
-                .padding(horizontal = 15.dp),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally
+            ,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(
+            Column(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = nextPrayingTime.first,
+                    fontSize = Title,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Spacer(Modifier.size(20.dp))
+                Text(
+                    text = nextPrayingTime.second,
+                    fontSize = TitleBig,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Spacer(Modifier.size(10.dp))
+                Text(
+                    remainingTime,
+                    fontSize = Title,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
+            TextButton(
                 onClick = {
-                    navController.navigate(Screen.PrayerTimesMonthly)
+                    showRegionBottomSheet = true
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White
-                )
+                modifier = Modifier
+                    .align(Alignment.Start)
             ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier.size(25.dp)
+                )
+                Spacer(Modifier.size(10.dp))
                 Text(
-                    Util.getCurrentDateInKrill(),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontSize = 25.sp,
-                    color = Color.Black,
-                    textAlign = TextAlign.Center
+                    text = state.region?.nameUz ?: stringResource(R.string.xудудни_танланг),
+                    fontSize = 20.sp,
+                    color = Color.White
                 )
             }
-            Row(
+            Spacer(Modifier.size(5.dp))
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
+                    .fillMaxSize()
+                    .weight(1.7f)
+                    .background(Color.White)
+                    .padding(horizontal = 15.dp),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    "Тонг",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Fajr ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    "Қуёш",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Sunrise ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    "Пешин",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Dhuhr ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    "Аср",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Asr ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    "Шом",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Maghrib ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    "Хуфтон",
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Text(
-                    text = state.prayingData?.timings?.Isha ?: "",
-                    style = MaterialTheme.typography.titleLarge,
-                )
+                Button(
+                    onClick = {
+                        navController.navigate(Screen.PrayerTimesMonthly)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Text(
+                        Util.getCurrentDateInKrill(),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 25.sp,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Тонг",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Fajr ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Қуёш",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Sunrise ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Пешин",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Dhuhr ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Аср",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Asr ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Шом",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Maghrib ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Хуфтон",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                    Text(
+                        text = state.prayingData?.timings?.Isha ?: "",
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
             }
         }
     }
